@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulaire de demande de messe</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-image: linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%);
+        }
+        .container {
+            width: 80%;
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            animation: slide-up 0.8s ease-out;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        input[type="text"],
+        input[type="date"],
+        input[type="time"],
+        textarea {
+            width: calc(100% - 22px);
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        textarea {
+            height: 100px;
+            resize: none;
+        }
+        button {
+            width: 100%;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        @keyframes slide-up {
+            0% {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slide-down {
+            0% {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .title-animation {
+            animation: slide-down 0.8s ease-out;
+        }
+
+        @media only screen and (max-width: 600px) {
+            .container {
+                width: 90%;
+            }
+            input[type="text"],
+            input[type="date"],
+            input[type="time"],
+            textarea {
+                width: calc(100% - 20px);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2 class="title-animation" style="text-align: center;">Formulaire de demande de messe</h2>
+        <form id="messeForm" method="POST" action="{% url 'insert' %}">
+            <div class="form-group">
+                <label for="demandeur">Demandeur :</label>
+                <input type="text" id="demandeur" name="demandeur" required>
+            </div>
+            <div class="form-group">
+                <label for="date">Date :</label>
+                <input type="date" id="date" name="date" required>
+            </div>
+            <div class="form-group">
+                <label for="heure">Heure :</label>
+                <input type="time" id="heure" name="heure" required>
+            </div>
+            <div class="form-group">
+                <label for="intention">Intention de messe :</label>
+                <textarea id="intention" name="intention" required></textarea>
+            </div>
+            <input type="hidden" id="uid" name="uid" required>
+            <button type="button" id="soumettre">Payer et envoyer la demande</button>
+        </form>
+        
+    </div>
+    <script src="https://cdn.kkiapay.me/k.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var uid = localStorage.getItem('userUid');
+            document.getElementById('uid').value = uid;
+
+            document.getElementById('demandeur').addEventListener('input', function() {
+                localStorage.setItem('nom-client', this.value);
+            });
+            document.getElementById('date').addEventListener('input', function() {
+                localStorage.setItem('date-demande', this.value);
+            });
+            document.getElementById('heure').addEventListener('input', function() {
+                localStorage.setItem('heure-demande', this.value);
+            });
+
+            document.getElementById('soumettre').addEventListener('click', function() {
+                openKkiapayWidget({
+                    amount: "2000",
+                    position: "center",
+                    callback: "",
+                    theme: "green",
+                    key: "14cac7b017c311efabaee775b3fb402c" ,
+                    sandbox:true 
+                });
+
+                
+                addSuccessListener(response => {
+                    document.getElementById('messeForm').submit(); 
+                });
+            });
+        });
+    </script>
+</body>
+</html>

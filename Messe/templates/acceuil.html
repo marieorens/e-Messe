@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>e-Messe</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body, html {
+            height: 100%;
+            width: 100%;
+            overflow: hidden;
+        }
+
+        .background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://i.postimg.cc/pLGbLqZs/saintluc.webp') no-repeat center center/cover;
+            filter: blur(4px);
+            z-index: -1;
+        }
+
+        .container {
+            position: relative;
+            height: 100%;
+            padding: 0 8.5%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: #fff;
+        }
+
+        nav {
+            position: absolute;
+            top: 0;
+            right: 0;
+            padding: 20px 8.5%;
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-link {
+            cursor: pointer;
+            padding: 10px 20px;
+            border: none;
+            background: none;
+            color: inherit;
+            font-size: 16px;
+            outline: none;
+        }
+
+        .nav-button {
+            display: flex;
+            align-items: center;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 20px;
+            background: none;
+            color: #fff;
+            font-size: 16px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .nav-button:hover {
+            background-color: red;
+            transform: scale(1.1);
+        }
+
+        .nav-button img {
+            width: 20px;
+            height: 20px;
+            margin-right: 8px;
+        }
+
+        .text-box {
+            font-size: 17px;
+            letter-spacing: 1px;
+            line-height: 26px;
+            opacity: 0;
+            transform: translateY(-50px);
+            animation: slide-down 1.5s forwards;
+        }
+
+        .text-box h1 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+
+        .text-box p {
+            margin-bottom: 30px; /* Augmente la marge en bas du paragraphe */
+            overflow: hidden;
+            white-space: nowrap;
+            animation: typing 4s steps(40) forwards;
+        }
+
+        .btn-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .btn-link {
+            display: inline-block;
+            padding: 10px 20px;
+            margin: 0 10px;
+            border: 2px solid #fff;
+            border-radius: 20px;
+            background: #fff;
+            color: #000;
+            font-weight: 600;
+            text-decoration: none;
+            transition: transform 0.3s ease;
+            opacity: 0;
+            transform: translateY(50px);
+            animation: slide-up 2s forwards;
+        }
+
+        .btn-link:hover {
+            transform: scale(1.1);
+        }
+
+        .btn-link:nth-child(2) {
+            animation-delay: 2.2s;
+        }
+
+        @keyframes slide-down {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slide-up {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes typing {
+            from { width: 0; }
+            to { width: 100%; }
+        }
+
+        @media (max-width: 768px) {
+            .text-box h1 {
+                font-size: 2em;
+            }
+
+            .nav-link, .nav-button, .btn-link {
+                font-size: 14px;
+            }
+
+            .btn-container {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .btn-link {
+                margin: 10px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="background"></div>
+    <div class="container">
+        <nav>
+            <button class="nav-button" type="button" id="dec-button">
+                <img src="https://i.postimg.cc/nhzhHd7L/turn-off.png" alt="Déconnexion">
+                Déconnexion
+            </button>
+        </nav>
+
+        <div class="text-box">
+            <h1>A nouveau, soyez la bienvenue.</h1>
+            <p>Que souhaitez-vous faire aujourd'hui?</p>
+            <div class="btn-container">
+                <a href="#" class="btn-link" id="demande">JE VEUX FAIRE UNE DEMANDE DE MESSE</a>
+                <a href="#" class="btn-link" id="historique">JE VEUX CONSULTER MON HISTORIQUE</a>
+            </div>
+        </div>
+    </div>
+<script>
+    let UserCreds = JSON.parse(sessionStorage.getItem("user-creds"))
+    let UserInfo = JSON.parse(sessionStorage.getItem("user-info"))
+    let dec = document.getElementById("dec-button");
+
+    let Signout = ()=>{
+        sessionStorage.removeItem("user-creds");
+        sessionStorage.removeItem("user-info");
+        console.log(sessionStorage)
+        window.location.href="{% url 'login' %}"
+    }
+
+    dec.addEventListener('click',Signout);
+    
+    dmd = document.getElementById("demande");
+    function demande(){
+        document.location.href = "{% url 'demande' %}"
+   }
+   dmd.addEventListener("click",demande);
+
+   function voirHistorique(){
+    document.location.href = "{% url 'historique' %}"
+   }
+
+   let consult = document.getElementById("historique");
+
+   consult.addEventListener("click",voirHistorique)
+</script>
+</body>
+</html>

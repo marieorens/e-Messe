@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mon historique de demandes</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+</head>
+<body>
+<div class="container mt-3">
+    <table class="table table-dark">
+        <thead>
+        <tr>
+            <th>No</th>
+            <th>Demandeur</th>
+            <th>Date</th>
+            <th>Heure</th>
+            <th>Intention</th>
+        </tr>
+        </thead>
+        <tbody id="tbody1">
+       
+        </tbody>
+    </table>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var userUid = localStorage.getItem('userUid');
+
+        if (userUid) {
+            console.log(userUid);
+
+            fetch(`/api/messe/?uid=${userUid}`)
+                .then(response => response.json())
+                .then(data => {
+                    var tbody = document.getElementById("tbody1");
+                    data.forEach(function (demande, index) {
+                        var trow = document.createElement("tr");
+                        trow.innerHTML = `
+                            <td>${index + 1}</td>
+                            <td>${demande.demandeur}</td>
+                            <td>${demande.date}</td>
+                            <td>${demande.heure}</td>
+                            <td>${demande.intention}</td>
+                        `;
+                        tbody.appendChild(trow);
+                    });
+                })
+                .catch(error => console.error('Erreur lors de la récupération des données:', error));
+        } else {
+            console.error('UID non trouvé dans le LocalStorage.');
+        }
+    });
+</script>
+
+</body>
+</html>
