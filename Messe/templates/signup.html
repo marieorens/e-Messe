@@ -1,128 +1,165 @@
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  
   <title>Inscription à E-Messe</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap');
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      background: #dfdfdf;
+    }
+
+    .login-box {
+      display: flex;
+      justify-content: center;
+      flex-direction: column;
+      width: 440px;
+      height: 480px;
+      padding: 30px;
+    }
+
+    .login-header {
+      text-align: center;
+      margin: 20px 0 40px 0;
+    }
+
+    .login-header header {
+      color: #333;
+      font-size: 30px;
+      font-weight: 600;
+    }
+
+    .input-box .input-field {
+      width: 100%;
+      height: 60px;
+      font-size: 17px;
+      padding: 0 25px;
+      margin-bottom: 15px;
+      border-radius: 30px;
+      border: none;
+      box-shadow: 0px 5px 10px 1px rgba(0, 0, 0, 0.05);
+      outline: none;
+      transition: .3s;
+    }
+
+    ::placeholder {
+      font-weight: 500;
+      color: #222;
+    }
+
+    .input-field:focus {
+      width: 105%;
+    }
+
+    .forgot {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 40px;
+    }
+
+    section {
+      display: flex;
+      align-items: center;
+      font-size: 14px;
+      color: #555;
+    }
+
+    #check {
+      margin-right: 10px;
+    }
+
+    a {
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    .input-submit {
+      position: relative;
+    }
+
+    .submit-btn {
+      width: 100%;
+      height: 60px;
+      background: #222;
+      border: none;
+      border-radius: 30px;
+      cursor: pointer;
+      transition: .3s;
+    }
+
+    .input-submit label {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: #fff;
+      cursor: pointer;
+    }
+
+    .submit-btn:hover {
+      background: #000;
+      transform: scale(1.05, 1);
+    }
+
+    .sign-up-link {
+      text-align: center;
+      font-size: 15px;
+      margin-top: 20px;
+    }
+
+    .sign-up-link a {
+      color: #fff;
+      font-weight: 600;
+    }
+
+    /* Message container styles */
+    .message-container {
+      position: fixed;
+      top: 20px; /* Adjust top position as needed */
+      left: 50%;
+      transform: translateX(-50%);
+      display: none;
+      padding: 10px;
+      margin-top: 10px;
+      border-radius: 5px;
+      text-align: center;
+      z-index: 1000; /* Ensure it's above other content */
+    }
+
+    .message-container.show {
+      display: block;
+    }
+
+    .message-container.success {
+      background-color: #4CAF50; /* Green for success */
+      color: white;
+    }
+
+    .message-container.failure {
+      background-color: #f44336; /* Red for failure */
+      color: white;
+    }
+  </style>
 </head>
-<style>
-  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap');
 
-*{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Poppins',sans-serif;
-}
-body{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    background: #dfdfdf;
-}
-.login-box{
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    width: 440px;
-    height: 480px;
-    padding: 30px;
-}
-.login-header{
-    text-align: center;
-    margin: 20px 0 40px 0;
-}
-.login-header header{
-    color: #333;
-    font-size: 30px;
-    font-weight: 600;
-}
-.input-box .input-field{
-    width: 100%;
-    height: 60px;
-    font-size: 17px;
-    padding: 0 25px;
-    margin-bottom: 15px;
-    border-radius: 30px;
-    border: none;
-    box-shadow: 0px 5px 10px 1px rgba(0,0,0, 0.05);
-    outline: none;
-    transition: .3s;
-}
-::placeholder{
-    font-weight: 500;
-    color: #222;
-}
-.input-field:focus{
-    width: 105%;
-}
-.forgot{
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 40px;
-}
-section{
-    display: flex;
-    align-items: center;
-    font-size: 14px;
-    color: #555;
-}
-#check{
-    margin-right: 10px;
-}
-a{
-    text-decoration: none;
-}
-a:hover{
-    text-decoration: underline;
-}
-section a{
-    color: #555;
-}
-.input-submit{
-    position: relative;
-}
-.submit-btn{
-    width: 100%;
-    height: 60px;
-    background: #222;
-    border: none;
-    border-radius: 30px;
-    cursor: pointer;
-    transition: .3s;
-}
-.input-submit label{
-    position: absolute;
-    top: 45%;
-    left: 50%;
-    color: #fff;
-    -webkit-transform: translate(-50%, -50%);
-    -ms-transform: translate(-50%, -50%);
-    transform: translate(-50%, -50%);
-    cursor: pointer;
-}
-.submit-btn:hover{
-    background: #000;
-    transform: scale(1.05,1);
-}
-.sign-up-link{
-    text-align: center;
-    font-size: 15px;
-    margin-top: 20px;
-}
-.sign-up-link a{
-    color: #000;
-    font-weight: 600;
-}
-.sign-up-link a {
-  color: #fff; 
-  font-weight: 600;
-}
-
-</style>
 <body>
   <form id="Mainform">
     <div class="login-box">
@@ -130,32 +167,37 @@ section a{
         <header>Inscription</header>
       </div>
       <div class="input-box">
-        <input type="text" class="input-field" placeholder="Nom" autocomplete="off"  id="nom">
+        <input type="text" class="input-field" placeholder="Nom" autocomplete="off" id="nom">
       </div>
       <div class="input-box">
-        <input type="mail" class="input-field" placeholder="Adresse email" id="mail" >
+        <input type="email" class="input-field" placeholder="Adresse email" id="mail">
       </div>
       <div class="input-box">
         <input type="password" class="input-field" placeholder="Mot de passe" id="mdp">
       </div>
       <div class="input-submit">
-        <button class="submit-btn" id="signup"><label for="">S'inscrire</label></button>
+        <button type="submit" class="submit-btn" id="signup">
+          <label for="">S'inscrire</label>
+        </button>
       </div><br>
       <div class="input-submit">
         <button class="submit-btn">
-            <label for="submit"><a style="color: #fff;" href="{% url 'login' %}">Connectez vous si vous avez déjà un compte</a></label></button>
+          <label for="submit">
+            <a href="{% url 'login' %}" style="color: #fff;">Connectez-vous si vous avez déjà un compte</a>
+          </label>
+        </button>
       </div>
+    </div>
   </form>
 
-  
+  <!-- Message container -->
+  <div id="messageContainer" class="message-container"></div>
 
   <script type="module">
     // Import the functions you need from the SDKs you need
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
     import { getDatabase } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
     import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
-    // TODO: Add SDKs for Firebase products that you want to use
-    // https://firebase.google.com/docs/web/setup#available-libraries
 
     // Your web app's Firebase configuration
     const firebaseConfig = {
@@ -172,31 +214,37 @@ section a{
     const app = initializeApp(firebaseConfig);
     const database = getDatabase(app);
     const auth = getAuth();
-    const btn = document.getElementById('signup')
+    const btn = document.getElementById('signup');
 
     btn.addEventListener('click', function (event) {
-
-      event.preventDefault()
+      event.preventDefault();
 
       var email = document.getElementById('mail').value;
       var mp = document.getElementById('mdp').value;
 
+      function showMessage(message, type) {
+        var messageContainer = document.getElementById('messageContainer');
+        messageContainer.textContent = message;
+        messageContainer.className = `message-container ${type} show`;
+        setTimeout(() => {
+          messageContainer.classList.remove('show');
+        }, 5000);
+      }
+
       createUserWithEmailAndPassword(auth, email, mp)
         .then((userCredential) => {
-          // Signed up 
+          // Signed up
           const user = userCredential.user;
-          alert("Inscription en cours....")
-          alert("Inscription validée.")
-          document.location.href = "{% url 'login' %}"
-
+          showMessage(`Inscription validée`, `success`);
+          setTimeout(() => {
+            document.location.href = "{% url 'login' %}";
+          }, 2000); // Delay redirect to show the message
         })
         .catch((error) => {
-          const errorCode = error.code;
           const errorMessage = error.message;
-          // ..
-          alert("Erreur lors de l'inscription.");
+          showMessage(`Erreur lors de l'inscription: ${errorMessage}`, `failure`);
         });
-    })
+    });
   </script>
 
 </body>
